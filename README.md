@@ -29,4 +29,3 @@ Each lab has its own folder containing:
 ## 📝 Notes
 - All labs are committed regularly to track progress.  
 - Code is written in **C++** unless stated otherwise.  
-- Each lab folder contains an `outputs/` sub-folder for program results.  
