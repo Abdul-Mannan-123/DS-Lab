@@ -1,6 +1,8 @@
 # Data Structures Lab Repository
 
-**Student Name:** Abdul Mannan  
+**Student Name:** Abdul Mannan 
+**Student ID:** 23K-0829
+**Section:** BCS-3H
 **Course:** Data Structures Lab  
 **Instructor:** Sir Junaid Aslam
 **University:** National University of Computer and Emerging Sciences  
