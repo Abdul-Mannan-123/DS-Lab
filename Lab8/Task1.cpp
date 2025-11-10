@@ -31,6 +31,10 @@ class Family{
         }
 
         void insert_parent(int val) {
+            if (child == nullptr) {
+                cout << "insert child first" << endl;
+                return;
+            }
             if (val >= 10 && val != 1 ) {
                 Node * temp = child;
                 while (temp -> right != nullptr) {
@@ -52,3 +56,13 @@ class Family{
         }
 
 };
+
+int main() {
+    Family f;
+
+    f.insert(1);
+    f.insert_parent(5);  
+    f.insert_parent(12); 
+
+    return 0;
+}
