@@ -1,68 +1,92 @@
 #include <iostream>
+#include <queue>
 using namespace std;
 
 class Node {
-    public:
-        int data;
-        Node * right;
-        Node * left;
+public:
+    string name;
+    Node* left;  
+    Node* right; 
 
-        Node(int val) {
-            data = val;
-            right = nullptr;
-            left =  nullptr;
-        }
+    Node(string n) {
+        name = n;
+        left = right = nullptr;
+    }
 };
-class Family{
-    public:
-        Node * child;
-        Family (){
-            child = nullptr;
-        }
-        void insert(int val) {
-            if (child == nullptr && val == 1) {
-                child = new Node(val);
-                return;
-            }
-            else{
-                cout << "child already exist" << endl;
-                return;
-            }
+
+class Family {
+private:
+    Node* root; 
+
+public:
+    Family() {
+        root = nullptr;
+    }
+
+    Node* createMember(string name) {
+        return new Node(name);
+    }
+    void setRoot(string name) {
+        root = new Node(name);
+    }
+    void addParents(Node* child, string parent1, string parent2) {
+        child->left = new Node(parent1);
+        child->right = new Node(parent2);
+    }
+    Node* getRoot() {
+        return root;
+    }
+    void printLeafNodes(Node* node) {
+        if (!node) return;
+
+        if (!node->left && !node->right) {
+            cout << node->name << " ";
+            return;
         }
 
-        void insert_parent(int val) {
-            if (child == nullptr) {
-                cout << "insert child first" << endl;
-                return;
-            }
-            if (val >= 10 && val != 1 ) {
-                Node * temp = child;
-                while (temp -> right != nullptr) {
-                    temp = temp -> right;
-                }
-                temp -> right = new Node(val);
-                cout << "inserted father" << endl;
-                return;
-            }
-            else if (val < 10 && val != 1){
-                Node * temp = child;
-                while (temp -> left != nullptr) {
-                    temp = temp -> left;
-                }
-                temp -> left = new Node(val);
-                cout << "inserted mother" << endl;
-                return;
-            }
-        }
+        printLeafNodes(node->left);
+        printLeafNodes(node->right);
+    }
 
+    int height(Node* node) {
+        if (!node) return 0;
+        return 1 + max(height(node->left), height(node->right));
+    }
+    void printLevels(Node* node) {
+        if (!node) return;
+
+        queue<pair<Node*, int>> q;
+        q.push({node, 1});
+
+        while (!q.empty()) {
+            auto current = q.front();
+            q.pop();
+
+            cout << current.first->name << " is at level " << current.second << endl;
+
+            if (current.first->left)
+                q.push({current.first->left, current.second + 1});
+            if (current.first->right)
+                q.push({current.first->right, current.second + 1});
+        }
+    }
 };
 
 int main() {
     Family f;
 
-    f.insert(1);
-    f.insert_parent(5);  
-    f.insert_parent(12); 
+    f.setRoot("You");
+    Node* child = f.getRoot();
+    f.addParents(child, "Father", "Mother");
+    f.addParents(child->left, "Grandfather (P)", "Grandmother (P)");
+    f.addParents(child->right, "Grandfather (M)", "Grandmother (M)");
+    cout << "Root (Youngest): " << f.getRoot()->name << endl;
+    cout << "Leaf Nodes (Oldest Ancestors): ";
+    f.printLeafNodes(f.getRoot());
+    cout << endl;
+    cout << "Height of Tree: " << f.height(f.getRoot()) << endl;
+    cout << "\nLevel of Each Member:\n";
+    f.printLevels(f.getRoot());
 
     return 0;
 }
