@@ -25,6 +25,7 @@ Each lab has its own folder containing:
 - [Lab 4](./Lab4)
 - [Lab 5](./Lab5)
 - [Lab 6](./Lab6)
+- [Lab 8](./Lab8)
 
 
 ---
